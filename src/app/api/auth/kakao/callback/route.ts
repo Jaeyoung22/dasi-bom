@@ -8,19 +8,29 @@ export async function GET(request: NextRequest) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://dasi-bom.vercel.app";
 
   if (errorParam) {
-    return NextResponse.redirect(`${siteUrl}/login?error=${errorParam}`);
+    return NextResponse.json({ step: "kakao_error", error: errorParam });
   }
 
   if (!code) {
-    return NextResponse.redirect(`${siteUrl}/login?error=no_code`);
+    return NextResponse.json({ step: "no_code", error: "code missing" });
   }
 
-  const REST_API_KEY = process.env.KAKAO_REST_API_KEY!;
-  const CLIENT_SECRET = process.env.KAKAO_CLIENT_SECRET!;
+  const REST_API_KEY = process.env.KAKAO_REST_API_KEY;
+  const CLIENT_SECRET = process.env.KAKAO_CLIENT_SECRET;
   const REDIRECT_URI = `${siteUrl}/api/auth/kakao/callback`;
 
+  if (!REST_API_KEY || !CLIENT_SECRET) {
+    return NextResponse.json({
+      step: "env_check",
+      error: "missing env vars",
+      hasKey: !!REST_API_KEY,
+      hasSecret: !!CLIENT_SECRET,
+      siteUrl,
+    });
+  }
+
   try {
-    // 1. 인가 코드로 토큰 발급
+    // 1. 토큰 발급
     const tokenRes = await fetch("https://kauth.kakao.com/oauth/token", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -35,11 +45,10 @@ export async function GET(request: NextRequest) {
 
     const tokenData = await tokenRes.json();
     if (!tokenData.access_token) {
-      const msg = tokenData.error_description || tokenData.error || "token_fail";
-      return NextResponse.redirect(`${siteUrl}/login?error=${encodeURIComponent(msg)}`);
+      return NextResponse.json({ step: "token_fail", tokenData });
     }
 
-    // 2. 카카오 유저 정보 가져오기
+    // 2. 유저 정보
     const userRes = await fetch("https://kapi.kakao.com/v2/user/me", {
       headers: { Authorization: `Bearer ${tokenData.access_token}` },
     });
@@ -49,14 +58,18 @@ export async function GET(request: NextRequest) {
     const nickname = kakaoUser.properties?.nickname || kakaoUser.kakao_account?.profile?.nickname || "익명";
     const avatarUrl = kakaoUser.properties?.profile_image || kakaoUser.kakao_account?.profile?.profile_image_url || null;
 
-    // 3. Supabase users 테이블에서 찾거나 생성
+    // 3. DB 저장
     const supabase = getSupabase();
 
-    const { data: existing } = await supabase
+    const { data: existing, error: findError } = await supabase
       .from("users")
       .select("id")
       .eq("auth_id", kakaoId)
       .single();
+
+    if (findError && findError.code !== "PGRST116") {
+      return NextResponse.json({ step: "db_find", error: findError });
+    }
 
     let userId: string;
 
@@ -79,13 +92,12 @@ export async function GET(request: NextRequest) {
         .single();
 
       if (insertError) {
-        return NextResponse.redirect(`${siteUrl}/login?error=${encodeURIComponent("db_insert: " + insertError.message)}`);
+        return NextResponse.json({ step: "db_insert", error: insertError });
       }
-
       userId = newUser?.id || "";
     }
 
-    // 4. 쿠키에 세션 저장
+    // 4. 쿠키 세션
     const response = NextResponse.redirect(`${siteUrl}/`);
     response.cookies.set("kakao_user_id", userId, {
       httpOnly: true,
@@ -111,6 +123,6 @@ export async function GET(request: NextRequest) {
 
     return response;
   } catch (e) {
-    return NextResponse.redirect(`${siteUrl}/login?error=${encodeURIComponent(String(e))}`);
+    return NextResponse.json({ step: "exception", error: String(e) });
   }
 }
