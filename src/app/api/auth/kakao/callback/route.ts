@@ -100,7 +100,7 @@ export async function GET(request: NextRequest) {
     // 4. 쿠키 세션
     const response = NextResponse.redirect(`${siteUrl}/`);
     response.cookies.set("kakao_user_id", userId, {
-      httpOnly: true,
+      httpOnly: false,
       secure: true,
       sameSite: "lax",
       maxAge: 60 * 60 * 24 * 30,
