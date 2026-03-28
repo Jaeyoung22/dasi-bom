@@ -108,8 +108,8 @@ export async function GET(request: NextRequest) {
       path: "/",
     };
     response.cookies.set("kakao_user_id", userId, cookieOptions);
-    response.cookies.set("kakao_nickname", encodeURIComponent(nickname), cookieOptions);
-    response.cookies.set("kakao_avatar", encodeURIComponent(avatarUrl || ""), cookieOptions);
+    response.cookies.set("kakao_nickname", nickname, cookieOptions);
+    response.cookies.set("kakao_avatar", avatarUrl || "", cookieOptions);
 
     return response;
   } catch (e) {
