@@ -15,17 +15,20 @@ export default function NearbyStatueItem({
 }: NearbyStatueItemProps) {
   return (
     <Link href={`/statues/${id}`}>
-      <div className="bg-white rounded-xl p-3.5 shadow-[0_1px_4px_rgba(0,0,0,0.04)] flex gap-3 items-center">
-        <div className="w-[50px] h-[50px] rounded-[10px] bg-beige flex items-center justify-center text-2xl shrink-0">
+      <div className="bg-surface rounded-xl p-3.5 border border-border/40 flex gap-3 items-center card-hover">
+        <div className="w-[46px] h-[46px] rounded-xl bg-gradient-to-br from-surface-muted to-beige flex items-center justify-center text-xl shrink-0">
           🕊️
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-[13px] font-bold text-dark truncate">{name}</div>
-          <div className="text-[11px] text-brown-dark mt-0.5 truncate">
-            {address} · {distance}
+          <div className="text-[13px] font-semibold text-dark truncate">{name}</div>
+          <div className="text-[10px] text-brown-dark/70 mt-1 truncate">
+            {address}
           </div>
         </div>
-        <div className="text-[11px] text-brown font-semibold shrink-0">→</div>
+        <div className="text-right shrink-0">
+          <div className="text-[11px] font-semibold text-brown">{distance}</div>
+          <div className="text-[9px] text-brown-dark/50 mt-0.5">거리</div>
+        </div>
       </div>
     </Link>
   );

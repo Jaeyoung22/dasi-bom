@@ -14,15 +14,20 @@ export default function RecentPost({
   comments,
 }: RecentPostProps) {
   return (
-    <div className="bg-white rounded-xl p-3.5 shadow-[0_1px_4px_rgba(0,0,0,0.04)]">
-      <div className="flex gap-2 items-center mb-2">
-        <div className="w-6 h-6 rounded-full bg-brown" />
-        <div className="text-xs font-semibold text-dark">{nickname}</div>
-        <div className="text-[10px] text-brown-dark">· {timeAgo}</div>
+    <div className="bg-surface rounded-xl p-4 border border-border/30 card-hover">
+      <div className="flex gap-2.5 items-center mb-2.5">
+        <div className="w-7 h-7 rounded-full bg-gradient-to-br from-brown/80 to-brown-dark flex items-center justify-center text-[10px] text-white font-bold">
+          {nickname.charAt(0)}
+        </div>
+        <div className="flex-1 min-w-0">
+          <span className="text-xs font-semibold text-dark">{nickname}</span>
+          <span className="text-[10px] text-brown-dark/50 ml-1.5">{timeAgo}</span>
+        </div>
       </div>
-      <div className="text-xs text-dark leading-relaxed">{content}</div>
-      <div className="text-[11px] text-brown-dark mt-2">
-        ❤️ {likes} · 💬 {comments}
+      <div className="text-[13px] text-dark/90 leading-[1.7] line-clamp-2">{content}</div>
+      <div className="flex gap-3 mt-3 text-[10px] text-brown-dark/60">
+        <span>♥ {likes}</span>
+        <span>💬 {comments}</span>
       </div>
     </div>
   );
