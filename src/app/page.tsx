@@ -73,7 +73,7 @@ export default function HomePage() {
       />
 
       <div className="px-5 py-4">
-        <StatsCard visitCount={0} badgeCount={0} rank={null} />
+        <UserStats userId={user?.dbId} />
       </div>
 
       <div className="px-5">
@@ -101,6 +101,20 @@ export default function HomePage() {
       </div>
     </div>
   );
+}
+
+function UserStats({ userId }: { userId: string | null | undefined }) {
+  const [stats, setStats] = useState({ visitCount: 0, badgeCount: 0, rank: null as number | null });
+
+  useEffect(() => {
+    const url = userId ? `/api/user-stats?user_id=${userId}` : "/api/user-stats";
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => setStats(data))
+      .catch(() => {});
+  }, [userId]);
+
+  return <StatsCard {...stats} />;
 }
 
 function RecentPosts() {

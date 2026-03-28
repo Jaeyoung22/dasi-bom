@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import BadgeIcon from "@/components/ui/BadgeIcon";
+import { useAuth } from "@/lib/auth-context";
 
 interface BadgeData {
   id: string;
@@ -21,9 +22,11 @@ export default function BadgesPage() {
   const [badges, setBadges] = useState<BadgeData[]>([]);
   const [totalStatues, setTotalStatues] = useState(84);
 
+  const { user } = useAuth();
+
   useEffect(() => {
-    // TODO: 실제 유저 ID로 교체
-    fetch("/api/badges?user_id=demo-user")
+    if (!user?.dbId) return;
+    fetch(`/api/badges?user_id=${user.dbId}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.badges) setBadges(data.badges);

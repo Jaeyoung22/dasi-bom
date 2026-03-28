@@ -2,8 +2,10 @@
 
 import { useState, useEffect, use } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Button from "@/components/ui/Button";
 import PhotoUpload from "@/components/ui/PhotoUpload";
+import { useAuth } from "@/lib/auth-context";
 import { useUserLocation } from "@/lib/hooks";
 import { uploadPhoto } from "@/lib/storage";
 import {
@@ -47,6 +49,8 @@ export default function StatueDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = use(params);
+  const { user } = useAuth();
+  const router = useRouter();
   const [statue, setStatue] = useState<StatueDetail | null>(null);
   const [posts, setPosts] = useState<PostData[]>([]);
   const [activeTab, setActiveTab] = useState<"posts" | "visitors">("posts");
@@ -80,12 +84,16 @@ export default function StatueDetailPage({
   }, [id, categoryFilter]);
 
   const handleSubmitPost = async () => {
+    if (!user?.dbId) {
+      router.push("/login");
+      return;
+    }
     if (!newPostContent.trim()) return;
     const res = await fetch("/api/posts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        user_id: "demo-user", // TODO: 실제 유저 연동
+        user_id: user?.dbId || "",
         statue_id: id,
         content: newPostContent,
         category: newPostCategory,
@@ -128,12 +136,15 @@ export default function StatueDetailPage({
       : false;
 
   const handleVerify = async () => {
+    if (!user?.dbId) {
+      router.push("/login");
+      return;
+    }
     if (!photoFile) return;
     setUploading(true);
     try {
       const photoUrl = await uploadPhoto(photoFile, `visits/${id}`);
 
-      // TODO: 실제 유저 ID는 로그인 후 연동
       const res = await fetch("/api/visits", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
