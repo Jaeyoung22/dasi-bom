@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import { AuthProvider } from "@/lib/auth-context";
-import BottomNav from "@/components/ui/BottomNav";
+import AuthGuard from "@/components/ui/AuthGuard";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -34,10 +34,9 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <AuthProvider>
-          <main className="flex-1 max-w-[430px] mx-auto w-full pb-16">
+          <AuthGuard>
             {children}
-          </main>
-          <BottomNav />
+          </AuthGuard>
         </AuthProvider>
       </body>
     </html>
