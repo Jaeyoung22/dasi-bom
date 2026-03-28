@@ -52,7 +52,8 @@ export default function HomePage() {
           .slice(0, 5);
 
         setNearbyStatues(withDistance);
-      });
+      })
+      .catch(() => {});
   }, [location]);
 
   const { user } = useAuth();
@@ -117,9 +118,18 @@ function UserStats({ userId }: { userId: string | null | undefined }) {
   return <StatsCard {...stats} />;
 }
 
+interface PostItem {
+  id: string;
+  content: string;
+  category: string;
+  likes_count: number;
+  created_at: string;
+  users?: { nickname: string; avatar_url: string | null };
+  comments?: { count: number }[];
+}
+
 function RecentPosts() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [posts, setPosts] = useState<any[]>([]);
+  const [posts, setPosts] = useState<PostItem[]>([]);
 
   useEffect(() => {
     fetch("/api/posts")

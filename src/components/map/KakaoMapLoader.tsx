@@ -40,14 +40,9 @@ export default function KakaoMapLoader({
     script.src =
       `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${appKey}&autoload=false`;
     script.onload = () => {
-      window.kakao.maps.load(() => {
-        console.log("[KakaoMapLoader] SDK ready");
-        setReady(true);
-      });
+      window.kakao.maps.load(() => setReady(true));
     };
-    script.onerror = () => {
-      console.error("[KakaoMapLoader] script load failed");
-    };
+    script.onerror = () => {};
     document.head.appendChild(script);
   }, []);
 
