@@ -33,6 +33,13 @@ interface PostData {
   users?: { nickname: string; avatar_url: string | null };
 }
 
+interface VisitorData {
+  id: string;
+  photo_url: string;
+  visited_at: string;
+  users?: { nickname: string; avatar_url: string | null };
+}
+
 function timeAgo(dateStr: string): string {
   const diff = Date.now() - new Date(dateStr).getTime();
   const minutes = Math.floor(diff / 60000);
@@ -65,12 +72,22 @@ export default function StatueDetailPage({
   const [newPostContent, setNewPostContent] = useState("");
   const [newPostCategory, setNewPostCategory] = useState<string>("impression");
   const [showPostForm, setShowPostForm] = useState(false);
+  const [visitors, setVisitors] = useState<VisitorData[]>([]);
   const { location } = useUserLocation();
 
   useEffect(() => {
     fetch(`/api/statues/${id}`)
       .then((res) => res.json())
       .then((data) => setStatue(data));
+  }, [id]);
+
+  // 방문자 로드
+  useEffect(() => {
+    fetch(`/api/visits?statue_id=${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) setVisitors(data);
+      });
   }, [id]);
 
   // 게시글 로드
@@ -149,7 +166,7 @@ export default function StatueDetailPage({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          user_id: "demo-user",
+          user_id: user.dbId,
           statue_id: id,
           photo_url: photoUrl,
         }),
@@ -229,7 +246,7 @@ export default function StatueDetailPage({
         {showVerify && !verifyResult && (
           <div className="mt-4 space-y-3">
             <PhotoUpload
-              onPhotoSelected={(file) => setPhotoFile(file)}
+              onPhotoSelected={(file, _preview) => setPhotoFile(file)}
               disabled={uploading}
             />
             <div className="flex gap-2">
@@ -432,8 +449,45 @@ export default function StatueDetailPage({
       )}
 
       {activeTab === "visitors" && (
-        <div className="px-5 py-4 text-center text-sm text-brown-dark">
-          방문자 목록이 여기에 표시됩니다
+        <div className="px-5 py-4">
+          {visitors.length === 0 ? (
+            <div className="text-center text-xs text-brown-dark py-8">
+              아직 방문 인증이 없어요. 첫 번째 방문자가 되어보세요!
+            </div>
+          ) : (
+            <div className="space-y-2.5">
+              {visitors.map((v) => (
+                <div
+                  key={v.id}
+                  className="bg-white rounded-xl p-3.5 shadow-[0_1px_4px_rgba(0,0,0,0.04)] flex gap-3 items-center"
+                >
+                  <div className="w-9 h-9 rounded-full bg-beige flex items-center justify-center text-sm shrink-0">
+                    🌸
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs font-semibold text-dark">
+                      {v.users?.nickname || "익명"}
+                    </div>
+                    <div className="text-[10px] text-brown-dark">
+                      {new Date(v.visited_at).toLocaleDateString("ko-KR", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </div>
+                  </div>
+                  {v.photo_url && (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={v.photo_url}
+                      alt="인증 사진"
+                      className="w-12 h-12 rounded-lg object-cover shrink-0"
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>

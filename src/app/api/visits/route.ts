@@ -1,6 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabase } from "@/lib/supabase";
 
+export async function GET(request: NextRequest) {
+  const supabase = getSupabase();
+  const { searchParams } = new URL(request.url);
+  const statue_id = searchParams.get("statue_id");
+
+  if (!statue_id) {
+    return NextResponse.json({ error: "statue_id required" }, { status: 400 });
+  }
+
+  const { data, error } = await supabase
+    .from("visits")
+    .select("id, photo_url, visited_at, users!visits_user_id_fkey(nickname, avatar_url)")
+    .eq("statue_id", statue_id)
+    .order("visited_at", { ascending: false })
+    .limit(50);
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json(data || []);
+}
+
 export async function POST(request: NextRequest) {
   const supabase = getSupabase();
   const body = await request.json();
