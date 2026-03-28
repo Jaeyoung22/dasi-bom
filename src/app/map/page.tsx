@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import KakaoMap from "@/components/map/KakaoMap";
+import { calculateDistance, formatDistance } from "@/lib/geo";
 
 interface StatueData {
   id: string;
@@ -62,6 +63,15 @@ export default function MapPage() {
     return regionMatch && searchMatch;
   });
 
+  // 유저 위치 기준 가까운 순 정렬
+  const sorted = userLocation
+    ? [...filtered].sort((a, b) => {
+        const distA = calculateDistance(userLocation.lat, userLocation.lng, a.latitude, a.longitude);
+        const distB = calculateDistance(userLocation.lat, userLocation.lng, b.latitude, b.longitude);
+        return distA - distB;
+      })
+    : filtered;
+
   const handleMarkerClick = useCallback((marker: { id: string; name: string; latitude: number; longitude: number }) => {
     const statue = statues.find((s) => s.id === marker.id);
     if (statue) setSelectedStatue(statue);
@@ -120,8 +130,8 @@ export default function MapPage() {
         {selectedStatue ? (
           <Link href={`/statues/${selectedStatue.id}`}>
             <div className="bg-cream rounded-[14px] p-4 flex gap-3.5 items-center">
-              <div className="w-[60px] h-[60px] rounded-xl bg-beige flex items-center justify-center text-[30px] shrink-0">
-                🕊️
+              <div className="w-[60px] h-[60px] rounded-xl bg-gradient-to-br from-[#f5e8e9] to-[#efe0d5] flex items-center justify-center text-[28px] shrink-0">
+                🌸
               </div>
               <div className="flex-1 min-w-0">
                 <div className="text-sm font-bold text-dark truncate">
@@ -139,27 +149,35 @@ export default function MapPage() {
         ) : (
           <div className="space-y-2 max-h-[200px] overflow-y-auto">
             <div className="text-[11px] text-brown-dark mb-1">
-              {filtered.length}개의 소녀상
+              {sorted.length}개의 소녀상
             </div>
-            {filtered.slice(0, 5).map((s) => (
-              <button
-                key={s.id}
-                onClick={() => setSelectedStatue(s)}
-                className="w-full bg-cream rounded-xl p-3 flex gap-3 items-center text-left"
-              >
-                <div className="w-10 h-10 rounded-lg bg-beige flex items-center justify-center text-lg shrink-0">
-                  🕊️
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="text-[13px] font-bold text-dark truncate">
-                    {s.name}
+            {sorted.slice(0, 5).map((s) => {
+              const dist = userLocation
+                ? formatDistance(calculateDistance(userLocation.lat, userLocation.lng, s.latitude, s.longitude))
+                : null;
+              return (
+                <button
+                  key={s.id}
+                  onClick={() => setSelectedStatue(s)}
+                  className="w-full bg-cream rounded-xl p-3 flex gap-3 items-center text-left"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#f5e8e9] to-[#efe0d5] flex items-center justify-center text-lg shrink-0">
+                    🌸
                   </div>
-                  <div className="text-[10px] text-brown-dark truncate">
-                    {s.address}
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[13px] font-bold text-dark truncate">
+                      {s.name}
+                    </div>
+                    <div className="text-[10px] text-brown-dark truncate">
+                      {s.address}
+                    </div>
                   </div>
-                </div>
-              </button>
-            ))}
+                  {dist && (
+                    <div className="text-[11px] text-brown font-semibold shrink-0">{dist}</div>
+                  )}
+                </button>
+              );
+            })}
           </div>
         )}
       </div>
