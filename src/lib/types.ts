@@ -15,7 +15,7 @@ export interface User {
   id: string;
   nickname: string;
   avatar_url: string | null;
-  provider: "kakao" | "naver" | "google";
+  provider: "kakao";
   total_badges: number;
   created_at: string;
 }

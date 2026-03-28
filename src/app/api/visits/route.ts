@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabase } from "@/lib/supabase";
+import { getAuthUserId } from "@/lib/auth-server";
 
 export async function GET(request: NextRequest) {
   const supabase = getSupabase();
@@ -25,13 +26,19 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const authUserId = getAuthUserId(request);
+  if (!authUserId) {
+    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  }
+
   const supabase = getSupabase();
   const body = await request.json();
-  const { user_id, statue_id, photo_url } = body;
+  const { statue_id, photo_url } = body;
+  const user_id = authUserId;
 
-  if (!user_id || !statue_id || !photo_url) {
+  if (!statue_id || !photo_url) {
     return NextResponse.json(
-      { error: "user_id, statue_id, photo_url are required" },
+      { error: "statue_id, photo_url are required" },
       { status: 400 }
     );
   }

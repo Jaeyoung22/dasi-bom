@@ -36,8 +36,9 @@ export default function KakaoMapLoader({
 
     const script = document.createElement("script");
     // autoload=false → document.write 방지
+    const appKey = process.env.NEXT_PUBLIC_KAKAO_MAP_KEY || "";
     script.src =
-      "https://dapi.kakao.com/v2/maps/sdk.js?appkey=8f4c99d25337659e3fa7a4e9144613e5&autoload=false";
+      `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${appKey}&autoload=false`;
     script.onload = () => {
       window.kakao.maps.load(() => {
         console.log("[KakaoMapLoader] SDK ready");

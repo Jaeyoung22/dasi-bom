@@ -101,7 +101,6 @@ export default function StatueDetailPage({
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        user_id: user?.dbId || "",
         statue_id: id,
         content: newPostContent,
         category: newPostCategory,
@@ -157,7 +156,6 @@ export default function StatueDetailPage({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          user_id: user.dbId,
           statue_id: id,
           photo_url: photoUrl,
         }),

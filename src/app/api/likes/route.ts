@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSupabase } from "@/lib/supabase";
+import { getAuthUserId } from "@/lib/auth-server";
 
 export async function GET(request: NextRequest) {
   const supabase = getSupabase();
@@ -22,8 +23,14 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const authUserId = getAuthUserId(request);
+  if (!authUserId) {
+    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  }
+
   const supabase = getSupabase();
-  const { user_id, post_id } = await request.json();
+  const { post_id } = await request.json();
+  const user_id = authUserId;
 
   if (!user_id || !post_id) {
     return NextResponse.json({ error: "user_id, post_id required" }, { status: 400 });

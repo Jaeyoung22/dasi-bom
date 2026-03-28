@@ -147,7 +147,7 @@ function RecentPosts() {
           timeAgo={timeAgo(post.created_at)}
           content={post.content}
           likes={post.likes_count || 0}
-          comments={0}
+          comments={post.comments?.[0]?.count || 0}
         />
       ))}
     </div>

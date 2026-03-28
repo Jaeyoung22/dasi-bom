@@ -29,9 +29,10 @@ function timeAgo(dateStr: string): string {
   return `${days}일 전`;
 }
 
-export default function PostCard({ post }: { post: PostData }) {
+export default function PostCard({ post, onDelete }: { post: PostData; onDelete?: (id: string) => void }) {
   const { user } = useAuth();
   const [liked, setLiked] = useState(false);
+  const [deleted, setDeleted] = useState(false);
   const [likesCount, setLikesCount] = useState(post.likes_count);
   const [showComments, setShowComments] = useState(false);
   const [comments, setComments] = useState<CommentData[]>([]);
@@ -54,7 +55,7 @@ export default function PostCard({ post }: { post: PostData }) {
     const res = await fetch("/api/likes", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_id: user.dbId, post_id: post.id }),
+      body: JSON.stringify({ post_id: post.id }),
     });
     if (res.ok) {
       const data = await res.json();
@@ -84,7 +85,6 @@ export default function PostCard({ post }: { post: PostData }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         post_id: post.id,
-        user_id: user.dbId,
         content: newComment,
       }),
     });
@@ -96,11 +96,29 @@ export default function PostCard({ post }: { post: PostData }) {
     setSubmitting(false);
   };
 
+  const handleDeletePost = async () => {
+    if (!confirm("게시글을 삭제하시겠어요?")) return;
+    const res = await fetch(`/api/posts?post_id=${post.id}`, { method: "DELETE" });
+    if (res.ok) {
+      setDeleted(true);
+      onDelete?.(post.id);
+    }
+  };
+
+  const handleDeleteComment = async (commentId: string) => {
+    const res = await fetch(`/api/comments?comment_id=${commentId}`, { method: "DELETE" });
+    if (res.ok) {
+      setComments((prev) => prev.filter((c) => c.id !== commentId));
+    }
+  };
+
+  if (deleted) return null;
+
   return (
     <div className="bg-white rounded-xl p-3.5 shadow-[0_1px_4px_rgba(0,0,0,0.04)]">
       <div className="flex gap-2 items-center mb-2">
         <div className="w-7 h-7 rounded-full bg-beige" />
-        <div>
+        <div className="flex-1">
           <div className="text-xs font-semibold text-dark">
             {post.users?.nickname || "익명"}
           </div>
@@ -111,6 +129,11 @@ export default function PostCard({ post }: { post: PostData }) {
             </span>
           </div>
         </div>
+        {user && post.users?.nickname === user.nickname && (
+          <button onClick={handleDeletePost} className="text-[10px] text-brown-dark/50 hover:text-red-400">
+            삭제
+          </button>
+        )}
       </div>
       <div className="text-xs text-dark leading-relaxed">{post.content}</div>
 
@@ -141,13 +164,21 @@ export default function PostCard({ post }: { post: PostData }) {
           {comments.map((c) => (
             <div key={c.id} className="flex gap-2 mb-2">
               <div className="w-5 h-5 rounded-full bg-beige shrink-0 mt-0.5" />
-              <div>
+              <div className="flex-1">
                 <span className="text-[10px] font-semibold text-dark">
                   {c.users?.nickname || "익명"}
                 </span>
                 <span className="text-[10px] text-brown-dark ml-1.5">
                   {timeAgo(c.created_at)}
                 </span>
+                {user && c.users?.nickname === user.nickname && (
+                  <button
+                    onClick={() => handleDeleteComment(c.id)}
+                    className="text-[9px] text-brown-dark/40 hover:text-red-400 ml-1.5"
+                  >
+                    삭제
+                  </button>
+                )}
                 <div className="text-[11px] text-dark mt-0.5">{c.content}</div>
               </div>
             </div>

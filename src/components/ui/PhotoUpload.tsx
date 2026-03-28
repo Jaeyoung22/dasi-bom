@@ -28,7 +28,7 @@ export default function PhotoUpload({
       <input
         ref={fileRef}
         type="file"
-        accept="image/*"
+        accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
         capture="environment"
         className="hidden"
         onChange={handleChange}
