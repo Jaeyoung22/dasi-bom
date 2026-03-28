@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
 
   let query = supabase
     .from("posts")
-    .select("*, users(nickname, avatar_url)")
+    .select("*, users!posts_user_id_fkey(nickname, avatar_url)")
     .order("created_at", { ascending: false });
 
   if (statue_id) query = query.eq("statue_id", statue_id);
@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
       category,
       image_urls: image_urls || [],
     })
-    .select("*, users(nickname, avatar_url)")
+    .select("*, users!posts_user_id_fkey(nickname, avatar_url)")
     .single();
 
   if (error) {
