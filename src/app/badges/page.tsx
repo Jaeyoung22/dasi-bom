@@ -39,6 +39,8 @@ export default function BadgesPage() {
   const progress = totalStatues > 0 ? Math.round((earnedCount / totalStatues) * 100) : 0;
 
   const hasFirstVisit = badges.some((b) => b.badge_type === "first_visit");
+  const hasSeoulComplete = badges.some((b) => b.badge_type === "city_complete" && b.badge_name === "서울의 봄");
+  const hasNationalComplete = badges.some((b) => b.badge_type === "national_complete");
   const earnedRegions = new Set(
     badges
       .filter((b) => b.badge_type === "regional" && b.statues)
@@ -51,15 +53,15 @@ export default function BadgesPage() {
       name: "서울의 봄",
       desc: "서울 전체 방문",
       emoji: "🏙️",
-      earned: false,
-      progress: `${badges.filter((b) => b.statues?.region === "서울").length}/14`,
+      earned: hasSeoulComplete,
+      progress: hasSeoulComplete ? undefined : `${badges.filter((b) => b.statues?.region === "서울").length}/14`,
     },
     {
       name: "전국의 봄",
       desc: "전국 방문 완료",
       emoji: "🇰🇷",
-      earned: false,
-      progress: earnedCount > 0 ? `${earnedCount}/${totalStatues}` : "미달성",
+      earned: hasNationalComplete,
+      progress: hasNationalComplete ? undefined : (earnedCount > 0 ? `${earnedCount}/${totalStatues}` : "미달성"),
     },
   ];
 

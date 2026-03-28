@@ -13,6 +13,7 @@ import {
   formatDistance,
   isWithinVerificationRange,
 } from "@/lib/geo";
+import PostCard from "@/components/posts/PostCard";
 
 interface StatueDetail {
   id: string;
@@ -38,16 +39,6 @@ interface VisitorData {
   photo_url: string;
   visited_at: string;
   users?: { nickname: string; avatar_url: string | null };
-}
-
-function timeAgo(dateStr: string): string {
-  const diff = Date.now() - new Date(dateStr).getTime();
-  const minutes = Math.floor(diff / 60000);
-  if (minutes < 60) return `${minutes}분 전`;
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours}시간 전`;
-  const days = Math.floor(hours / 24);
-  return `${days}일 전`;
 }
 
 export default function StatueDetailPage({
@@ -246,7 +237,7 @@ export default function StatueDetailPage({
         {showVerify && !verifyResult && (
           <div className="mt-4 space-y-3">
             <PhotoUpload
-              onPhotoSelected={(file, _preview) => setPhotoFile(file)}
+              onPhotoSelected={(file) => setPhotoFile(file)}
               disabled={uploading}
             />
             <div className="flex gap-2">
@@ -273,17 +264,43 @@ export default function StatueDetailPage({
 
         {/* 인증 결과 */}
         {verifyResult && (
-          <div className="mt-4 text-center bg-white rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
+          <div className="mt-4 text-center bg-white rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.06)] relative overflow-hidden">
             {verifyResult.success ? (
               <>
-                <div className="text-5xl mb-3">🎉</div>
-                <h3 className="text-lg font-bold text-dark">
+                {/* 축하 파티클 */}
+                <div className="absolute inset-0 pointer-events-none">
+                  {["🌸", "✨", "🎊", "🕊️", "💮", "🌷"].map((emoji, i) => (
+                    <span
+                      key={i}
+                      className="absolute text-xl animate-bounce"
+                      style={{
+                        left: `${15 + i * 14}%`,
+                        top: `${10 + (i % 3) * 20}%`,
+                        animationDelay: `${i * 0.15}s`,
+                        animationDuration: `${1 + (i % 3) * 0.5}s`,
+                      }}
+                    >
+                      {emoji}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="text-6xl mb-3 animate-bounce">🎉</div>
+                <h3 className="text-lg font-bold text-dark animate-[fadeIn_0.5s_ease-out]">
                   방문 인증 완료!
                 </h3>
                 {verifyResult.badgeName && (
-                  <p className="text-sm text-brown mt-2">
-                    🏅 &quot;{verifyResult.badgeName}&quot; 뱃지를 획득했어요!
-                  </p>
+                  <div className="mt-4 animate-[fadeIn_0.8s_ease-out]">
+                    <div className="inline-block bg-gradient-to-b from-[#f5e6c8] to-[#e8d5b0] rounded-2xl p-5 shadow-[0_4px_16px_rgba(196,149,106,0.3)]">
+                      <div className="text-4xl mb-2">🏅</div>
+                      <div className="text-sm font-bold text-dark">
+                        &quot;{verifyResult.badgeName}&quot;
+                      </div>
+                      <div className="text-[10px] text-brown-dark mt-1">
+                        뱃지를 획득했어요!
+                      </div>
+                    </div>
+                  </div>
                 )}
               </>
             ) : (
@@ -416,33 +433,7 @@ export default function StatueDetailPage({
               </div>
             )}
             {posts.map((post) => (
-              <div
-                key={post.id}
-                className="bg-white rounded-xl p-3.5 shadow-[0_1px_4px_rgba(0,0,0,0.04)]"
-              >
-                <div className="flex gap-2 items-center mb-2">
-                  <div className="w-7 h-7 rounded-full bg-beige" />
-                  <div>
-                    <div className="text-xs font-semibold text-dark">
-                      {post.users?.nickname || "익명"}
-                    </div>
-                    <div className="text-[10px] text-brown-dark">
-                      {timeAgo(post.created_at)} ·{" "}
-                      <span className="bg-surface-muted px-1.5 py-0.5 rounded-lg">
-                        {post.category === "status_report"
-                          ? "상태보고"
-                          : "방문소감"}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="text-xs text-dark leading-relaxed">
-                  {post.content}
-                </div>
-                <div className="text-[11px] text-brown-dark mt-2">
-                  ❤️ {post.likes_count}
-                </div>
-              </div>
+              <PostCard key={post.id} post={post} />
             ))}
           </div>
         </div>

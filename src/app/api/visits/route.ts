@@ -102,6 +102,78 @@ export async function POST(request: NextRequest) {
         badge_name: "첫 번째 봄",
       });
     }
+
+    // 도시 완료 뱃지 확인
+    if (statue) {
+      const region = statue.region;
+
+      // 해당 지역 전체 소녀상 수
+      const { count: regionTotal } = await supabase
+        .from("statues")
+        .select("id", { count: "exact", head: true })
+        .eq("region", region);
+
+      // 해당 지역 소녀상 ID 목록
+      const { data: regionStatues } = await supabase
+        .from("statues")
+        .select("id")
+        .eq("region", region);
+
+      const regionStatueIds = new Set(regionStatues?.map((s) => s.id) || []);
+
+      // 유저가 방문한 고유 소녀상
+      const { data: allUserVisits } = await supabase
+        .from("visits")
+        .select("statue_id")
+        .eq("user_id", user_id);
+
+      const allVisitedIds = new Set(allUserVisits?.map((v) => v.statue_id) || []);
+
+      // 해당 지역에서 방문한 소녀상
+      const visitedInRegion = [...allVisitedIds].filter((id) => regionStatueIds.has(id));
+
+      if (regionTotal && visitedInRegion.length >= regionTotal) {
+        const { data: existingCity } = await supabase
+          .from("badges")
+          .select("id")
+          .eq("user_id", user_id)
+          .eq("badge_type", "city_complete")
+          .eq("badge_name", `${region}의 봄`)
+          .single();
+
+        if (!existingCity) {
+          await supabase.from("badges").insert({
+            user_id,
+            statue_id: null,
+            badge_type: "city_complete",
+            badge_name: `${region}의 봄`,
+          });
+        }
+      }
+
+      // 전국 완료 뱃지 확인
+      const { count: totalStatues } = await supabase
+        .from("statues")
+        .select("id", { count: "exact", head: true });
+
+      if (totalStatues && allVisitedIds.size >= totalStatues) {
+        const { data: existingNational } = await supabase
+          .from("badges")
+          .select("id")
+          .eq("user_id", user_id)
+          .eq("badge_type", "national_complete")
+          .single();
+
+        if (!existingNational) {
+          await supabase.from("badges").insert({
+            user_id,
+            statue_id: null,
+            badge_type: "national_complete",
+            badge_name: "전국의 봄",
+          });
+        }
+      }
+    }
   }
 
   return NextResponse.json({ visit, badge, isNewBadge: !!badge });

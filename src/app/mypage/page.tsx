@@ -1,10 +1,12 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import Header from "@/components/ui/Header";
 import Button from "@/components/ui/Button";
 
 export default function MyPage() {
+  const router = useRouter();
   const { user, loading, signOut } = useAuth();
 
   if (loading) {
@@ -47,14 +49,15 @@ export default function MyPage() {
 
           <div className="mt-2">
             {[
-              { label: "내 방문 기록", icon: "📸" },
-              { label: "내가 쓴 글", icon: "📝" },
-              { label: "좋아요한 글", icon: "❤️" },
-              { label: "알림 설정", icon: "🔔" },
-              { label: "앱 정보", icon: "ℹ️" },
+              { label: "내 방문 기록", icon: "📸", href: "/mypage/visits" },
+              { label: "내가 쓴 글", icon: "📝", href: "/mypage/posts" },
+              { label: "좋아요한 글", icon: "❤️", href: "/mypage/likes" },
+              { label: "알림 설정", icon: "🔔", href: "" },
+              { label: "앱 정보", icon: "ℹ️", href: "" },
             ].map((item) => (
               <button
                 key={item.label}
+                onClick={() => item.href && router.push(item.href)}
                 className="w-full flex items-center gap-3 px-5 py-4 border-b border-border text-left"
               >
                 <span className="text-base">{item.icon}</span>
