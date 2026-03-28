@@ -1,0 +1,590 @@
+[
+  {
+    "name": "평화비 (평화의 소녀상)",
+    "address": "서울특별시 종로구 중학동 일본대사관 앞",
+    "region": "서울",
+    "installed_date": "2011-12-14",
+    "description": "1000번째 수요집회 기념으로 건립된 최초의 평화의 소녀상"
+  },
+  {
+    "name": "전쟁과여성인권박물관 소녀상",
+    "address": "서울특별시 마포구 성산동 전쟁과여성인권박물관",
+    "region": "서울",
+    "installed_date": "2012-05-05",
+    "description": "전쟁과여성인권박물관 내 설치"
+  },
+  {
+    "name": "서초고등학교 소녀상",
+    "address": "서울특별시 서초구 서초동 서초고등학교",
+    "region": "서울",
+    "installed_date": "2013-09-04",
+    "description": "세계 일본군 성노예제 피해자 기림일 기념"
+  },
+  {
+    "name": "대현문화공원 소녀상",
+    "address": "서울특별시 서대문구 대현문화공원",
+    "region": "서울",
+    "installed_date": "2014-12-24",
+    "description": "대학생이 세운 평화의 소녀상"
+  },
+  {
+    "name": "노원구 소녀상",
+    "address": "서울특별시 노원구 마들근린공원 역사의 길",
+    "region": "서울",
+    "installed_date": "2015-08-25",
+    "description": "마들근린공원 역사의 길에 설치"
+  },
+  {
+    "name": "한·중 평화의 소녀상",
+    "address": "서울특별시 성북구 동소문동 가로공원",
+    "region": "서울",
+    "installed_date": "2015-10-28",
+    "description": "한중 공동 건립 소녀상"
+  },
+  {
+    "name": "프란치스코 교육회관 소녀상",
+    "address": "서울특별시 중구 프란치스코 교육회관",
+    "region": "서울",
+    "installed_date": "2015-11-03",
+    "description": "이화여고 역사동아리 주먹도끼 주도로 건립"
+  },
+  {
+    "name": "동작구 소녀상",
+    "address": "서울특별시 동작구 흑석동 흑석역 3번출구",
+    "region": "서울",
+    "installed_date": "2016-08-15",
+    "description": "흑석역 3번 출구 옆 설치"
+  },
+  {
+    "name": "구로구 소녀상",
+    "address": "서울특별시 구로구 구로역 북부광장",
+    "region": "서울",
+    "installed_date": "2016-08-15",
+    "description": "구로역 북부광장에 설치"
+  },
+  {
+    "name": "성동구 소녀상",
+    "address": "서울특별시 성동구 왕십리광장",
+    "region": "서울",
+    "installed_date": "2017-06-10",
+    "description": "왕십리광장에 설치"
+  },
+  {
+    "name": "무학여고 소녀상",
+    "address": "서울특별시 성동구 무학여자고등학교",
+    "region": "서울",
+    "installed_date": "2017-08-14",
+    "description": "세계 일본군 성노예제 피해자 기림일 기념"
+  },
+  {
+    "name": "은평구 소녀상",
+    "address": "서울특별시 은평구 은평 평화공원",
+    "region": "서울",
+    "installed_date": "2018-08-14",
+    "description": "은평 평화공원에 설치"
+  },
+  {
+    "name": "송파구 소녀상",
+    "address": "서울특별시 송파구 송파책박물관 공원",
+    "region": "서울",
+    "installed_date": "2019-08-14",
+    "description": "송파책박물관 내 공원에 설치"
+  },
+  {
+    "name": "강서구 소녀상",
+    "address": "서울특별시 강서구 마곡동 유수지",
+    "region": "서울",
+    "installed_date": "2019-11-11",
+    "description": "고 황금자 할머니 미니어처 동상 포함"
+  },
+  {
+    "name": "나눔의집 못다 핀 꽃",
+    "address": "경기도 광주시 퇴촌면 나눔의집",
+    "region": "경기",
+    "installed_date": "1998-08-14",
+    "description": "일본군 성노예제 피해자 고 김학순 할머니 추도 작품"
+  },
+  {
+    "name": "일산 소녀상",
+    "address": "경기도 고양시 일산동구 일산문화광장",
+    "region": "경기",
+    "installed_date": "2013-05-01",
+    "description": "일산문화광장에 설치"
+  },
+  {
+    "name": "김학순 할머니 상",
+    "address": "경기도 고양시 덕양구 국립여성사전시관",
+    "region": "경기",
+    "installed_date": "2013-11-12",
+    "description": "국립여성사전시관 내 설치"
+  },
+  {
+    "name": "성남시청 소녀상",
+    "address": "경기도 성남시 중원구 성남시청 광장",
+    "region": "경기",
+    "installed_date": "2014-04-15",
+    "description": "성남시청 광장에 설치"
+  },
+  {
+    "name": "수원 올림픽공원 소녀상",
+    "address": "경기도 수원시 권선동 올림픽공원",
+    "region": "경기",
+    "installed_date": "2014-05-03",
+    "description": "수원평화비"
+  },
+  {
+    "name": "안성 유무상동마을 소녀상",
+    "address": "경기도 안성시 양성면 유무상동마을",
+    "region": "경기",
+    "installed_date": "2014-05-28",
+    "description": "동양 평화 소녀상"
+  },
+  {
+    "name": "화성 동탄 소녀상",
+    "address": "경기도 화성시 동탄 센트럴파크",
+    "region": "경기",
+    "installed_date": "2014-08-14",
+    "description": "동탄 센트럴파크에 설치"
+  },
+  {
+    "name": "광명동굴 소녀상",
+    "address": "경기도 광명시 광명동굴 입구",
+    "region": "경기",
+    "installed_date": "2015-08-17",
+    "description": "광명동굴 입구에 설치"
+  },
+  {
+    "name": "의정부 소녀상",
+    "address": "경기도 의정부시 평화공원",
+    "region": "경기",
+    "installed_date": "2015-11-07",
+    "description": "평화공원에 설치"
+  },
+  {
+    "name": "부천 소녀상",
+    "address": "경기도 부천시 원미구 중동 안중근공원",
+    "region": "경기",
+    "installed_date": "2016-02-03",
+    "description": "안중근공원에 설치"
+  },
+  {
+    "name": "군포 소녀상",
+    "address": "경기도 군포시 당정동 당정 근린공원",
+    "region": "경기",
+    "installed_date": "2016-08-09",
+    "description": "당정 근린공원에 설치"
+  },
+  {
+    "name": "김포 소녀상",
+    "address": "경기도 김포시 한강 중앙공원",
+    "region": "경기",
+    "installed_date": "2016-08-14",
+    "description": "한강 중앙공원에 설치"
+  },
+  {
+    "name": "오산 소녀상",
+    "address": "경기도 오산시 오산시청 광장",
+    "region": "경기",
+    "installed_date": "2016-08-14",
+    "description": "오산시청 광장에 설치"
+  },
+  {
+    "name": "안산 소녀상",
+    "address": "경기도 안산시 상록수역 광장",
+    "region": "경기",
+    "installed_date": "2016-08-15",
+    "description": "상록수역 광장에 설치"
+  },
+  {
+    "name": "시흥 소녀상",
+    "address": "경기도 시흥시 정왕동 옥구공원",
+    "region": "경기",
+    "installed_date": "2016-08-20",
+    "description": "옥구공원에 설치"
+  },
+  {
+    "name": "안양 소녀상",
+    "address": "경기도 안양시 동안구 평촌 중앙공원",
+    "region": "경기",
+    "installed_date": "2017-03-01",
+    "description": "평촌 중앙공원에 설치"
+  },
+  {
+    "name": "평택 소녀상",
+    "address": "경기도 평택시 평택 청소년 문화센터",
+    "region": "경기",
+    "installed_date": "2017-03-01",
+    "description": "청소년 문화센터에 설치"
+  },
+  {
+    "name": "의왕 소녀상",
+    "address": "경기도 의왕시 의왕레일파크 광장",
+    "region": "경기",
+    "installed_date": "2018-03-01",
+    "description": "의왕레일파크 광장에 설치"
+  },
+  {
+    "name": "안성 내혜홀공원 소녀상",
+    "address": "경기도 안성시 내혜홀공원",
+    "region": "경기",
+    "installed_date": "2018-03-03",
+    "description": "내혜홀공원에 설치"
+  },
+  {
+    "name": "양주 소녀상",
+    "address": "경기도 양주시 옥정 중앙공원",
+    "region": "경기",
+    "installed_date": "2018-08-14",
+    "description": "옥정 중앙공원에 설치"
+  },
+  {
+    "name": "신한대학교 소녀상",
+    "address": "경기도 의정부시 신한대학교 제1캠퍼스",
+    "region": "경기",
+    "installed_date": "2019-09-10",
+    "description": "신한대학교 캠퍼스 내 설치"
+  },
+  {
+    "name": "안산 제2 소녀상",
+    "address": "경기도 안산시 단원구 안산시청",
+    "region": "경기",
+    "installed_date": "2020-08-14",
+    "description": "안산시청에 설치 (코로나로 온라인 중계 진행)"
+  },
+  {
+    "name": "인천 부평공원 소녀상",
+    "address": "인천광역시 부평구 부평공원",
+    "region": "인천",
+    "installed_date": "2016-10-29",
+    "description": "부평공원에 설치"
+  },
+  {
+    "name": "인천 대건고 소녀상",
+    "address": "인천광역시 대건고등학교 3층 중앙현관",
+    "region": "인천",
+    "installed_date": "2019-09-10",
+    "description": "교내 작은 평화의 소녀상"
+  },
+  {
+    "name": "부산 어린이대공원 소녀상",
+    "address": "부산광역시 부산진구 어린이 대공원",
+    "region": "부산",
+    "installed_date": "2016-03-01",
+    "description": "어린이 대공원에 설치"
+  },
+  {
+    "name": "부산 일본총영사관 앞 소녀상",
+    "address": "부산광역시 동구 고관로 주부산 일본 총영사관 앞",
+    "region": "부산",
+    "installed_date": "2016-12-28",
+    "description": "부산 일본 총영사관 앞에 설치"
+  },
+  {
+    "name": "대전 보라매공원 소녀상",
+    "address": "대전광역시 서구 보라매공원",
+    "region": "대전",
+    "installed_date": "2015-03-01",
+    "description": "보라매공원에 설치"
+  },
+  {
+    "name": "대전 동구 소녀상",
+    "address": "대전광역시 동구",
+    "region": "대전",
+    "installed_date": "2020-08-14",
+    "description": "대전 동구에 설치"
+  },
+  {
+    "name": "대구 명상의숲 소녀상",
+    "address": "대구광역시 남구 대구여자상업고등학교 명상의숲",
+    "region": "대구",
+    "installed_date": "2015-08-15",
+    "description": "이용수 할머니가 모델"
+  },
+  {
+    "name": "군위 소녀상",
+    "address": "대구광역시 군위군 사라온 이야기마을",
+    "region": "대구",
+    "installed_date": "2015-10-07",
+    "description": "이용수 할머니가 모델"
+  },
+  {
+    "name": "대구 2.28기념공원 소녀상",
+    "address": "대구광역시 중구 공평동 2.28기념 중앙공원",
+    "region": "대구",
+    "installed_date": "2017-03-01",
+    "description": "2.28기념 중앙공원에 설치"
+  },
+  {
+    "name": "울산 대공원 소녀상",
+    "address": "울산광역시 남구 울산대공원",
+    "region": "울산",
+    "installed_date": "2015-03-01",
+    "description": "울산대공원에 설치"
+  },
+  {
+    "name": "광주 시민의숲 소녀상",
+    "address": "광주광역시 서구 시청앞 시민의숲",
+    "region": "광주",
+    "installed_date": "2015-08-14",
+    "description": "나비의 소원"
+  },
+  {
+    "name": "세종 호수공원 소녀상",
+    "address": "세종특별자치시 세종호수공원",
+    "region": "세종",
+    "installed_date": "2015-10-03",
+    "description": "세종호수공원에 설치"
+  },
+  {
+    "name": "강릉 경포 소녀상",
+    "address": "강원특별자치도 강릉시 저동 경포 3.1운동기념공원",
+    "region": "강원",
+    "installed_date": "2015-08-05",
+    "description": "경포 3.1운동기념공원에 설치"
+  },
+  {
+    "name": "원주 시청공원 소녀상",
+    "address": "강원특별자치도 원주시 무실동 시청공원",
+    "region": "강원",
+    "installed_date": "2015-08-15",
+    "description": "원주 시청공원에 설치"
+  },
+  {
+    "name": "춘천 의암공원 소녀상",
+    "address": "강원특별자치도 춘천시 의암공원",
+    "region": "강원",
+    "installed_date": "2017-12-09",
+    "description": "의암공원에 설치"
+  },
+  {
+    "name": "속초 엑스포공원 소녀상",
+    "address": "강원특별자치도 속초시 조양동 엑스포공원",
+    "region": "강원",
+    "installed_date": "2017-12-10",
+    "description": "엑스포공원에 설치"
+  },
+  {
+    "name": "천안 목천고 소녀상",
+    "address": "충청남도 천안시 동남구 목천고등학교",
+    "region": "충남",
+    "installed_date": "2015-03-02",
+    "description": "목천고등학교 내 설치"
+  },
+  {
+    "name": "서산 시민공원 소녀상",
+    "address": "충청남도 서산시 시민공원",
+    "region": "충남",
+    "installed_date": "2015-10-30",
+    "description": "서산 시민공원에 설치"
+  },
+  {
+    "name": "천안 신부공원 소녀상",
+    "address": "충청남도 천안시 동남구 신부공원",
+    "region": "충남",
+    "installed_date": "2015-12-11",
+    "description": "신부공원에 설치"
+  },
+  {
+    "name": "당진 소녀상",
+    "address": "충청남도 당진시 당진 종합버스터미널 광장",
+    "region": "충남",
+    "installed_date": "2016-03-01",
+    "description": "종합버스터미널 광장에 설치"
+  },
+  {
+    "name": "아산 신정호공원 소녀상",
+    "address": "충청남도 아산시 온양4동 신정호공원",
+    "region": "충남",
+    "installed_date": "2016-03-08",
+    "description": "신정호공원에 설치"
+  },
+  {
+    "name": "논산 소녀상",
+    "address": "충청남도 논산시 논산시민공원",
+    "region": "충남",
+    "installed_date": "2016-08-14",
+    "description": "논산시민공원에 설치"
+  },
+  {
+    "name": "서천 소녀상",
+    "address": "충청남도 서천군 서천읍 봄의마을 광장",
+    "region": "충남",
+    "installed_date": "2017-01-17",
+    "description": "봄의마을 광장에 설치"
+  },
+  {
+    "name": "충남대학교 소녀상",
+    "address": "대전광역시 유성구 충남대학교 서문",
+    "region": "충남",
+    "installed_date": "2022-08-15",
+    "description": "국립대학교 최초 설치"
+  },
+  {
+    "name": "청주 배티공원 소녀상",
+    "address": "충청북도 청주시 서원구 배티공원",
+    "region": "충북",
+    "installed_date": "2015-08-11",
+    "description": "여성인권기원상"
+  },
+  {
+    "name": "청주 청소년광장 소녀상",
+    "address": "충청북도 청주시 상당구 청소년 광장",
+    "region": "충북",
+    "installed_date": "2015-11-03",
+    "description": "충북 평화의 소녀상"
+  },
+  {
+    "name": "제천 의병광장 소녀상",
+    "address": "충청북도 제천시 화산동 의병광장",
+    "region": "충북",
+    "installed_date": "2016-10-07",
+    "description": "의병광장에 설치"
+  },
+  {
+    "name": "군산 동국사 소녀상",
+    "address": "전북특별자치도 군산시 동국사",
+    "region": "전북",
+    "installed_date": "2015-08-12",
+    "description": "동국사에 설치"
+  },
+  {
+    "name": "전주 기억의광장 소녀상",
+    "address": "전북특별자치도 전주시 기억의광장",
+    "region": "전북",
+    "installed_date": "2015-08-13",
+    "description": "기억의광장에 설치"
+  },
+  {
+    "name": "남원 소녀상",
+    "address": "전북특별자치도 남원시 어현동 사랑의 광장",
+    "region": "전북",
+    "installed_date": "2016-05-12",
+    "description": "사랑의 광장에 설치"
+  },
+  {
+    "name": "순천 조례호수공원 소녀상",
+    "address": "전라남도 순천시 조례호수공원 원형광장",
+    "region": "전남",
+    "installed_date": "2016-10-15",
+    "description": "조례호수공원 원형광장에 설치"
+  },
+  {
+    "name": "익산역 소녀상",
+    "address": "전북특별자치도 익산시 익산역",
+    "region": "전북",
+    "installed_date": "2017-08-15",
+    "description": "익산역에 설치"
+  },
+  {
+    "name": "해남 소녀상",
+    "address": "전라남도 해남군 해남공원",
+    "region": "전남",
+    "installed_date": "2015-12-12",
+    "description": "해남공원에 설치"
+  },
+  {
+    "name": "목포 소녀상",
+    "address": "전라남도 목포시 대의동 구 목포 일본 영사관 앞",
+    "region": "전남",
+    "installed_date": "2016-04-08",
+    "description": "구 목포 일본 영사관 앞에 설치"
+  },
+  {
+    "name": "무안 남악 소녀상",
+    "address": "전라남도 무안군 남악 중앙공원",
+    "region": "전남",
+    "installed_date": "2016-08-14",
+    "description": "남악 중앙공원에 설치"
+  },
+  {
+    "name": "곡성 소녀상",
+    "address": "전라남도 곡성군 곡성읍 곡성레저문화센터 앞",
+    "region": "전남",
+    "installed_date": "2016-10-07",
+    "description": "곡성레저문화센터 앞에 설치"
+  },
+  {
+    "name": "여수 이순신광장 소녀상",
+    "address": "전라남도 여수시 이순신광장",
+    "region": "전남",
+    "installed_date": "2017-03-01",
+    "description": "이순신광장에 설치"
+  },
+  {
+    "name": "포항 환호공원 소녀상",
+    "address": "경상북도 포항시 환호공원",
+    "region": "경북",
+    "installed_date": "2015-11-18",
+    "description": "환호공원에 설치"
+  },
+  {
+    "name": "상주 왕산역사공원 소녀상",
+    "address": "경상북도 상주시 서성동 왕산역사공원",
+    "region": "경북",
+    "installed_date": "2016-10-29",
+    "description": "왕산역사공원에 설치"
+  },
+  {
+    "name": "영천 소녀상",
+    "address": "경상북도 영천시 시립도서관 앞마당",
+    "region": "경북",
+    "installed_date": "2017-12-10",
+    "description": "시립도서관 앞마당에 설치"
+  },
+  {
+    "name": "구미 소녀상",
+    "address": "경상북도 구미시 구미역 뒤편 광장",
+    "region": "경북",
+    "installed_date": "2018-03-01",
+    "description": "이용수 할머니가 모델. 구미역 뒤편 광장에 설치"
+  },
+  {
+    "name": "통영 남망산공원 소녀상",
+    "address": "경상남도 통영시 동호동 남망산공원",
+    "region": "경남",
+    "installed_date": "2013-04-06",
+    "description": "정의비(正義碑)"
+  },
+  {
+    "name": "거제 소녀상",
+    "address": "경상남도 거제시 장승포동 거제 문화예술회관 소공원",
+    "region": "경남",
+    "installed_date": "2014-01-17",
+    "description": "문화예술회관 소공원에 설치"
+  },
+  {
+    "name": "남해 숙이공원 소녀상",
+    "address": "경상남도 남해군 숙이공원",
+    "region": "경남",
+    "installed_date": "2015-08-14",
+    "description": "고 박숙이 할머니가 모델"
+  },
+  {
+    "name": "창원 마산 소녀상",
+    "address": "경상남도 창원시 마산합포구 오동동 문화광장",
+    "region": "경남",
+    "installed_date": "2015-08-27",
+    "description": "자주인권평화다짐비"
+  },
+  {
+    "name": "김해 연지공원 소녀상",
+    "address": "경상남도 김해시 내동 연지공원 내 조각공원",
+    "region": "경남",
+    "installed_date": "2018-08-14",
+    "description": "세계 일본군 성노예제 피해자 기림일 추모"
+  },
+  {
+    "name": "하동 평화의 탑",
+    "address": "경상남도 하동군 악양면 취간림",
+    "region": "경남",
+    "installed_date": "2007-05-26",
+    "description": "고 정서운 할머니 3주기 추모. 악양비"
+  },
+  {
+    "name": "제주 소녀상",
+    "address": "제주특별자치도 제주시 노형동 방일리근린공원",
+    "region": "제주",
+    "installed_date": "2015-12-19",
+    "description": "방일리근린공원에 설치"
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "name": "다시, 봄",
+  "short_name": "다시봄",
+  "description": "빼앗긴 봄을 되찾습니다 — 전국 평화의 소녀상 방문 인증",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fdf6e3",
+  "theme_color": "#3d3529",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

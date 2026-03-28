@@ -1,0 +1,55 @@
+"use client";
+
+import { useEffect, useState, createContext, useContext } from "react";
+
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
+
+const KakaoContext = createContext(false);
+
+export function useKakaoReady() {
+  return useContext(KakaoContext);
+}
+
+export default function KakaoMapLoader({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    // 이미 로드 완료
+    if (window.kakao?.maps?.LatLng) {
+      setReady(true);
+      return;
+    }
+
+    // 스크립트가 이미 있으면 스킵
+    if (document.querySelector('script[src*="dapi.kakao.com"]')) {
+      return;
+    }
+
+    const script = document.createElement("script");
+    // autoload=false → document.write 방지
+    script.src =
+      "https://dapi.kakao.com/v2/maps/sdk.js?appkey=8f4c99d25337659e3fa7a4e9144613e5&autoload=false";
+    script.onload = () => {
+      window.kakao.maps.load(() => {
+        console.log("[KakaoMapLoader] SDK ready");
+        setReady(true);
+      });
+    };
+    script.onerror = () => {
+      console.error("[KakaoMapLoader] script load failed");
+    };
+    document.head.appendChild(script);
+  }, []);
+
+  return (
+    <KakaoContext.Provider value={ready}>{children}</KakaoContext.Provider>
+  );
+}
