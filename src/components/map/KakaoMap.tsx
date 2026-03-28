@@ -23,7 +23,7 @@ interface KakaoMapProps {
   userLocation?: { lat: number; lng: number } | null;
 }
 
-const KAKAO_APP_KEY = "8f4c99d25337659e3fa7a4e9144613e5";
+const KAKAO_APP_KEY = process.env.NEXT_PUBLIC_KAKAO_MAP_KEY || "";
 
 export default function KakaoMap({
   markers,
