@@ -2,10 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSupabase } from "@/lib/supabase";
 
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
+  const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
   const errorParam = searchParams.get("error");
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://dasi-bom.vercel.app";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || origin;
+  const isDev = process.env.NODE_ENV === "development";
 
   if (errorParam) {
     return NextResponse.json({ step: "kakao_error", error: errorParam });
@@ -99,27 +100,16 @@ export async function GET(request: NextRequest) {
 
     // 4. 쿠키 세션
     const response = NextResponse.redirect(`${siteUrl}/`);
-    response.cookies.set("kakao_user_id", userId, {
+    const cookieOptions = {
       httpOnly: false,
-      secure: true,
-      sameSite: "lax",
+      secure: !isDev,
+      sameSite: "lax" as const,
       maxAge: 60 * 60 * 24 * 30,
       path: "/",
-    });
-    response.cookies.set("kakao_nickname", encodeURIComponent(nickname), {
-      httpOnly: false,
-      secure: true,
-      sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 30,
-      path: "/",
-    });
-    response.cookies.set("kakao_avatar", encodeURIComponent(avatarUrl || ""), {
-      httpOnly: false,
-      secure: true,
-      sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 30,
-      path: "/",
-    });
+    };
+    response.cookies.set("kakao_user_id", userId, cookieOptions);
+    response.cookies.set("kakao_nickname", encodeURIComponent(nickname), cookieOptions);
+    response.cookies.set("kakao_avatar", encodeURIComponent(avatarUrl || ""), cookieOptions);
 
     return response;
   } catch (e) {
