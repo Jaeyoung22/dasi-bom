@@ -65,6 +65,7 @@ export default function HomePage() {
         rightElement={
           <div className="w-9 h-9 rounded-full bg-brown flex items-center justify-center text-base overflow-hidden">
             {user?.avatarUrl ? (
+              /* eslint-disable-next-line @next/next/no-img-element */
               <img src={user.avatarUrl} alt="" className="w-full h-full object-cover" />
             ) : "👤"}
           </div>
@@ -103,6 +104,7 @@ export default function HomePage() {
 }
 
 function RecentPosts() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [posts, setPosts] = useState<any[]>([]);
 
   useEffect(() => {

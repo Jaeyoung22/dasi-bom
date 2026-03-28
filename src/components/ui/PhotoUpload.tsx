@@ -35,6 +35,7 @@ export default function PhotoUpload({
       />
       {preview ? (
         <div className="relative">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={preview}
             alt="인증 사진"

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     kakao: any;
   }
 }
@@ -30,7 +31,9 @@ export default function KakaoMap({
   userLocation,
 }: KakaoMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mapInstanceRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const markersRef = useRef<any[]>([]);
   const [ready, setReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -39,8 +42,8 @@ export default function KakaoMap({
   useEffect(() => {
     // 이미 ready
     if (window.kakao?.maps?.LatLng) {
-      setReady(true);
-      return;
+      const id = setTimeout(() => setReady(true), 0);
+      return () => clearTimeout(id);
     }
 
     // 이미 load 함수가 있으면 호출

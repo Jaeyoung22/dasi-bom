@@ -25,6 +25,7 @@ export default function MyPage() {
           <div className="px-5 py-6 flex items-center gap-4">
             <div className="w-16 h-16 rounded-full bg-brown flex items-center justify-center text-2xl overflow-hidden">
               {user.avatarUrl ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
                 <img
                   src={user.avatarUrl}
                   alt={user.nickname}

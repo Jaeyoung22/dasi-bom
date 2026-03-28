@@ -4,6 +4,7 @@ import { useEffect, useState, createContext, useContext } from "react";
 
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     kakao: any;
   }
 }
@@ -24,8 +25,8 @@ export default function KakaoMapLoader({
   useEffect(() => {
     // 이미 로드 완료
     if (window.kakao?.maps?.LatLng) {
-      setReady(true);
-      return;
+      const id = setTimeout(() => setReady(true), 0);
+      return () => clearTimeout(id);
     }
 
     // 스크립트가 이미 있으면 스킵

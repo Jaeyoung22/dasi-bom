@@ -1,11 +1,12 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useCallback } from "react";
 import { getSupabase } from "./supabase";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 interface AuthUser {
-  id: string; // Supabase auth UID
-  dbId: string | null; // users 테이블 ID
+  id: string;
+  dbId: string | null;
   nickname: string;
   avatarUrl: string | null;
   email: string | null;
@@ -31,37 +32,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const syncUser = useCallback(async (authUser: SupabaseUser) => {
     const supabase = getSupabase();
 
-    // 현재 세션 확인
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        syncUser(session.user);
-      } else {
-        setLoading(false);
-      }
-    });
-
-    // 인증 상태 변화 감지
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) {
-        syncUser(session.user);
-      } else {
-        setUser(null);
-        setLoading(false);
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  async function syncUser(authUser: any) {
-    const supabase = getSupabase();
-
-    // users 테이블에서 찾기
     const { data: existing } = await supabase
       .from("users")
       .select("id, nickname, avatar_url")
@@ -74,10 +47,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         dbId: existing.id,
         nickname: existing.nickname,
         avatarUrl: existing.avatar_url,
-        email: authUser.email,
+        email: authUser.email ?? null,
       });
     } else {
-      // 새 유저 생성
       const nickname =
         authUser.user_metadata?.name ||
         authUser.user_metadata?.full_name ||
@@ -100,21 +72,44 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         dbId: newUser?.id || null,
         nickname,
         avatarUrl: authUser.user_metadata?.avatar_url || null,
-        email: authUser.email,
+        email: authUser.email ?? null,
       });
     }
     setLoading(false);
-  }
+  }, []);
 
-  async function handleSignOut() {
+  useEffect(() => {
+    const supabase = getSupabase();
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        syncUser(session.user);
+      } else {
+        setLoading(false);
+      }
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        syncUser(session.user);
+      } else {
+        setUser(null);
+        setLoading(false);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [syncUser]);
+
+  const handleSignOut = useCallback(async () => {
     await getSupabase().auth.signOut();
     setUser(null);
-  }
+  }, []);
 
   return (
-    <AuthContext.Provider
-      value={{ user, loading, signOut: handleSignOut }}
-    >
+    <AuthContext.Provider value={{ user, loading, signOut: handleSignOut }}>
       {children}
     </AuthContext.Provider>
   );
