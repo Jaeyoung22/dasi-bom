@@ -1,8 +1,13 @@
 "use client";
 
-export default function LoginPage() {
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+
+function LoginContent() {
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error");
+
   const handleKakaoLogin = () => {
-    // 서버 API로 리다이렉트 → 카카오 로그인 페이지로 이동
     window.location.href = "/api/auth/kakao";
   };
 
@@ -15,6 +20,12 @@ export default function LoginPage() {
           빼앗긴 봄을 되찾습니다
         </p>
       </div>
+
+      {error && (
+        <div className="w-full max-w-[320px] mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-600">
+          로그인 에러: {decodeURIComponent(error)}
+        </div>
+      )}
 
       <div className="w-full max-w-[320px]">
         <button
@@ -36,5 +47,17 @@ export default function LoginPage() {
         로그인하면 서비스 이용약관에 동의하는 것으로 간주됩니다
       </p>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-cream flex items-center justify-center">
+        <div className="text-4xl">🕊️</div>
+      </div>
+    }>
+      <LoginContent />
+    </Suspense>
   );
 }

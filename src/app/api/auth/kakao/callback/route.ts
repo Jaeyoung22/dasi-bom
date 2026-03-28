@@ -4,14 +4,19 @@ import { getSupabase } from "@/lib/supabase";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
+  const errorParam = searchParams.get("error");
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://dasi-bom.vercel.app";
+
+  if (errorParam) {
+    return NextResponse.redirect(`${siteUrl}/login?error=${errorParam}`);
+  }
 
   if (!code) {
     return NextResponse.redirect(`${siteUrl}/login?error=no_code`);
   }
 
-  const REST_API_KEY = process.env.KAKAO_REST_API_KEY || "92baa982e60244c65116d5c61feaa141";
-  const CLIENT_SECRET = process.env.KAKAO_CLIENT_SECRET || "yw923I09bLaQxnqB0bXpf16rTvYXhcgs";
+  const REST_API_KEY = process.env.KAKAO_REST_API_KEY!;
+  const CLIENT_SECRET = process.env.KAKAO_CLIENT_SECRET!;
   const REDIRECT_URI = `${siteUrl}/api/auth/kakao/callback`;
 
   try {
@@ -30,7 +35,8 @@ export async function GET(request: NextRequest) {
 
     const tokenData = await tokenRes.json();
     if (!tokenData.access_token) {
-      return NextResponse.redirect(`${siteUrl}/login?error=token_fail`);
+      const msg = tokenData.error_description || tokenData.error || "token_fail";
+      return NextResponse.redirect(`${siteUrl}/login?error=${encodeURIComponent(msg)}`);
     }
 
     // 2. 카카오 유저 정보 가져오기
@@ -40,8 +46,8 @@ export async function GET(request: NextRequest) {
     const kakaoUser = await userRes.json();
 
     const kakaoId = String(kakaoUser.id);
-    const nickname = kakaoUser.properties?.nickname || "익명";
-    const avatarUrl = kakaoUser.properties?.profile_image || null;
+    const nickname = kakaoUser.properties?.nickname || kakaoUser.kakao_account?.profile?.nickname || "익명";
+    const avatarUrl = kakaoUser.properties?.profile_image || kakaoUser.kakao_account?.profile?.profile_image_url || null;
 
     // 3. Supabase users 테이블에서 찾거나 생성
     const supabase = getSupabase();
@@ -56,13 +62,12 @@ export async function GET(request: NextRequest) {
 
     if (existing) {
       userId = existing.id;
-      // 닉네임/프로필 업데이트
       await supabase
         .from("users")
         .update({ nickname, avatar_url: avatarUrl })
         .eq("id", userId);
     } else {
-      const { data: newUser } = await supabase
+      const { data: newUser, error: insertError } = await supabase
         .from("users")
         .insert({
           auth_id: kakaoId,
@@ -73,16 +78,20 @@ export async function GET(request: NextRequest) {
         .select("id")
         .single();
 
+      if (insertError) {
+        return NextResponse.redirect(`${siteUrl}/login?error=${encodeURIComponent("db_insert: " + insertError.message)}`);
+      }
+
       userId = newUser?.id || "";
     }
 
-    // 4. 세션 토큰을 쿠키에 저장 (간단한 방식)
+    // 4. 쿠키에 세션 저장
     const response = NextResponse.redirect(`${siteUrl}/`);
     response.cookies.set("kakao_user_id", userId, {
       httpOnly: true,
       secure: true,
       sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 30, // 30일
+      maxAge: 60 * 60 * 24 * 30,
       path: "/",
     });
     response.cookies.set("kakao_nickname", encodeURIComponent(nickname), {
@@ -101,7 +110,7 @@ export async function GET(request: NextRequest) {
     });
 
     return response;
-  } catch {
-    return NextResponse.redirect(`${siteUrl}/login?error=unknown`);
+  } catch (e) {
+    return NextResponse.redirect(`${siteUrl}/login?error=${encodeURIComponent(String(e))}`);
   }
 }
