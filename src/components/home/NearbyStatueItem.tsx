@@ -16,8 +16,8 @@ export default function NearbyStatueItem({
   return (
     <Link href={`/statues/${id}`}>
       <div className="bg-surface rounded-xl p-3.5 border border-border/40 flex gap-3 items-center card-hover">
-        <div className="w-[46px] h-[46px] rounded-xl bg-gradient-to-br from-surface-muted to-beige flex items-center justify-center text-xl shrink-0">
-          🕊️
+        <div className="w-[46px] h-[46px] rounded-xl bg-gradient-to-br from-[#f5e8e9] to-[#efe0d5] flex items-center justify-center text-xl shrink-0">
+          🌸
         </div>
         <div className="flex-1 min-w-0">
           <div className="text-[13px] font-semibold text-dark truncate">{name}</div>

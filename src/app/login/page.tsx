@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-import DoveIllustration from "@/components/illustrations/DoveIllustration";
+import FlowerIllustration from "@/components/illustrations/FlowerIllustration";
 import CherryBlossom from "@/components/illustrations/CherryBlossom";
 import WatercolorBlob from "@/components/illustrations/WatercolorBlob";
 
@@ -30,7 +30,7 @@ function LoginContent() {
 
       {/* 비둘기 일러스트 */}
       <div className="relative mb-2 animate-fade-in-up">
-        <DoveIllustration size={160} />
+        <FlowerIllustration size={160} />
       </div>
 
       {/* 제목 */}
@@ -88,7 +88,7 @@ export default function LoginPage() {
       <div className="min-h-screen flex items-center justify-center"
         style={{ background: `linear-gradient(170deg, #f5ede0 0%, #faf5ec 50%, #efe3d0 100%)` }}
       >
-        <DoveIllustration size={80} className="animate-pulse" />
+        <FlowerIllustration size={80} className="animate-pulse" />
       </div>
     }>
       <LoginContent />

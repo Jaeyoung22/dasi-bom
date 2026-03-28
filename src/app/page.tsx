@@ -105,19 +105,15 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* 통계 카드 — 걸치기 */}
-        <div className="relative px-5 -mb-12">
+        {/* 통계 카드 */}
+        <div className="relative px-5 mt-5">
           <UserStats userId={user?.dbId} />
         </div>
 
-        {/* 하단 곡선 */}
-        <svg viewBox="0 0 430 30" className="absolute -bottom-1 left-0 right-0 w-full" preserveAspectRatio="none">
-          <path d="M0 30 L0 15 Q215 -5 430 15 L430 30Z" fill="var(--background)" />
-        </svg>
       </div>
 
       {/* 가까운 소녀상 */}
-      <div className="px-5 pt-16 pb-2 relative">
+      <div className="px-5 pt-5 pb-2 relative">
         <div className="flex items-baseline justify-between mb-4">
           <div>
             <h2 className="font-title text-[16px] text-dark">가까운 소녀상</h2>
