@@ -40,7 +40,7 @@ export default function MyPage() {
                 {user.nickname}
               </div>
               <div className="text-xs text-brown-dark mt-1">
-                {user.email || "소녀상을 방문하고 봄을 모아보세요"}
+                소녀상을 방문하고 봄을 모아보세요
               </div>
             </div>
           </div>
